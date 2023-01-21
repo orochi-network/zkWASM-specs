@@ -27,7 +27,7 @@ In the manuscript they supposed that, zk-SNARK circuit will take the whole input
 
 Denote \\(S\\) is state of Wasm run-time, it's a tuple: \\((𝑖𝑎𝑑𝑑𝑟, F,M, G, SP, I, IO)\\)
 
-- \\(𝑖𝑎𝑑𝑑𝑟\\): current address of instruction in memory (\\(𝑖𝑎𝑑𝑑𝑟 = E\\) at the beginning, 𝑖𝑎𝑑𝑑𝑟 is not program count (`PC`))
+- \\(𝑖𝑎𝑑𝑑𝑟\\): current address of instruction in memory (\\(𝑖𝑎𝑑𝑑𝑟 = E\\) at the beginning, 𝑖𝑎𝑑𝑑𝑟 is not program count `PC`)
 - \\(F\\): Calling frame with a `depth` field (is it a stack?)
 - \\(M\\): Memory state
 - \\(G\\): Global variables
@@ -37,7 +37,7 @@ Denote \\(S\\) is state of Wasm run-time, it's a tuple: \\((𝑖𝑎𝑑𝑑𝑟
   - \\(H\\): Initial memory
 - \\(IO\\): Represent as `stdin` and `stdout`
 
-Here is one step of the execution:
+Here are steps of the execution:
 
 - **Step 1**: Take the internal state \\(S_i\\) as the input (At the initial state, \\(S_i\.\text{𝑖𝑎𝑑𝑑𝑟} = E\\)).
 - **Step 2**: Execute the opcode at current 𝑖𝑎𝑑𝑑𝑟 over \\(S\_{i}\\)

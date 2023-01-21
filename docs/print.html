@@ -194,7 +194,7 @@
 <h3 id="internal-state-of-wasm-run-time"><a class="header" href="#internal-state-of-wasm-run-time">Internal state of Wasm run-time</a></h3>
 <p>Denote \(S\) is state of Wasm run-time, it's a tuple: \((𝑖𝑎𝑑𝑑𝑟, F,M, G, SP, I, IO)\)</p>
 <ul>
-<li>\(𝑖𝑎𝑑𝑑𝑟\): current address of instruction in memory (\(𝑖𝑎𝑑𝑑𝑟 = E\) at the beginning, 𝑖𝑎𝑑𝑑𝑟 is not program count (<code>PC</code>))</li>
+<li>\(𝑖𝑎𝑑𝑑𝑟\): current address of instruction in memory (\(𝑖𝑎𝑑𝑑𝑟 = E\) at the beginning, 𝑖𝑎𝑑𝑑𝑟 is not program count <code>PC</code>)</li>
 <li>\(F\): Calling frame with a <code>depth</code> field (is it a stack?)</li>
 <li>\(M\): Memory state</li>
 <li>\(G\): Global variables</li>
@@ -207,7 +207,7 @@
 </li>
 <li>\(IO\): Represent as <code>stdin</code> and <code>stdout</code></li>
 </ul>
-<p>Here is one step of the execution:</p>
+<p>Here are steps of the execution:</p>
 <ul>
 <li><strong>Step 1</strong>: Take the internal state \(S_i\) as the input (At the initial state, \(S_i.\text{𝑖𝑎𝑑𝑑𝑟} = E\)).</li>
 <li><strong>Step 2</strong>: Execute the opcode at current 𝑖𝑎𝑑𝑑𝑟 over \(S_{i}\)
@@ -242,6 +242,22 @@ We called this is a execution trace \(t_i\)</li>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
