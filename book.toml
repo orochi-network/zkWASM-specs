@@ -1,0 +1,12 @@
+[book]
+authors = ["Chiro Hiro"]
+language = "en"
+multilingual = false
+src = "src"
+title = "zkWASM Specifications"
+[output.html]
+mathjax-support = true
+[output.html.fold]
+enable = true
+[preprocessor.bib]
+bibliography = "refs.bib"
