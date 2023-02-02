@@ -1,12 +1,1 @@
-*.css
-*.js
-*.png
-book/.nojekyll
-*.html
-*.woff
-*.woff2
-*.json
-*.ttf
-*.eot
-*.svg
-*.txt
+book/
