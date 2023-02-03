@@ -32,5 +32,5 @@ $$
 $$
 3. For a specific location, any READ access must have value equal to the previous access.
 $$
-    (i = 0) \vee ((i > 0) \wedge \left(\overline{(\textsf{location} _i = \textsf{location} _{i - 1}) \wedge (\textsf{type}_i = \text{READ}) \wedge (\textsf{value}_i \neq \textsf{value} _{i - 1})}\right)).
+    (i = 0) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _i = \textsf{location} _{i - 1}) \wedge (\textsf{type}_i = \text{READ}) \wedge (\textsf{value}_i \neq \textsf{value} _{i - 1})}\right)\right).
 $$
