@@ -33,12 +33,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Install mdbook cli and build
-        run: cargo install mdbook && cargo install mdbook-bib && mdbook build
+        run: cargo install mdbook && cargo install mdbook-bib && mdbook build && cp -r ./book/* ./ && rm -rf ./src ./.git ./.github
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: '.'
+          path: './'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
