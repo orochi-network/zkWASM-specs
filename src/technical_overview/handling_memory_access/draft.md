@@ -22,15 +22,19 @@ Then, we sort the above sequence \\(\textsf{AcRec}\\) into the form that, for al
 
 ## Transforming to Constraints
 We now make the constraints regarding the above sorted ordering of sequence of accesses. These constraints guarantee that the sequence is sorted correctly. We describe the constraints as follows:
-1. For a specific location, time tag must be increasingly ordered.
+1. The locations are non-decreasing.
 $$
-    (i = 0) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _i = \textsf{location} _{i - 1}) \wedge (\textsf{time} _i \leq \textsf{time} _{i - 1})}\right)\right).
+    (i = 0) \vee \left((i > 0) \wedge \left(\textsf{location} _{i - 1} \leq \textsf{location} _i\right)\right).
+$$
+1. For a specific location, time tags must be increasingly ordered.
+$$
+    (i = 0) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _{i - 1} = \textsf{location} _i) \wedge (\textsf{time} _{i - 1} \geq \textsf{time} _i)}\right)\right).
 $$
 2. For a specific location, the first access must be WRITE. 
 $$
-    (i = 0 \wedge \textsf{type}_i = \text{WRITE}) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _i \neq \textsf{location} _{i - 1}) \wedge (\textsf{type} _i = \text{READ})}\right)\right).
+    \left((i = 0) \wedge (\textsf{type}_i = \text{WRITE})\right) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _{i - 1}\neq \textsf{location} _i) \wedge (\textsf{type} _i = \text{READ})}\right)\right).
 $$
 3. For a specific location, any READ access must have value equal to the previous access.
 $$
-    (i = 0) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _i = \textsf{location} _{i - 1}) \wedge (\textsf{type}_i = \text{READ}) \wedge (\textsf{value}_i \neq \textsf{value} _{i - 1})}\right)\right).
+    (i = 0) \vee \left((i > 0) \wedge \left(\overline{(\textsf{location} _{i - 1} = \textsf{location} _i) \wedge (\textsf{type}_i = \text{READ}) \wedge (\textsf{value}_i \neq \textsf{value} _{i - 1})}\right)\right).
 $$
