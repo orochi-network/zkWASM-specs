@@ -2,9 +2,19 @@
 
 ## Indices 
 
-All types of indices start with zero.
+All types of indices start with zero.  Each class of definition has its own index space
 
 ## Types
+
+## Functions
+
+func: {type typeidx, locals vec(vartype), body expr}
+
+## Tables
+
+The table component of a module defines a vector of tables described by their table type:
+
+table: {type tabletype}
 
 ## Memory
 
