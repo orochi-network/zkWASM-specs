@@ -40,8 +40,15 @@ Result types is the result of executing instructions or functions which is a seq
 
 **resulttype** : **[vec(valtype)]**
 
+## Table Types:
+
+**tabletype**: **limit** **reftype**
+
+## Memory Types:
+
 ## Global Types: 
 
 **globaltype**: **mut** **valtype**
+
 **mut**: const | var
 
