@@ -40,15 +40,33 @@ Result types is the result of executing instructions or functions which is a seq
 
 **resulttype** : **[vec(valtype)]**
 
-## Table Types:
+## Limit Types:
 
-**tabletype**: **limit** **reftype**
+Limit types are the range of storage of memory types and table types
+
+**limit**: \\(\{\\)**min** **u32**, **max** **u32** \\(\}\\)
+
+The value **max** is optional. If there is no **max**, the storage can grow to any size.
 
 ## Memory Types:
 
+**memtype**: **limits**
+
+The limits constrain the minimum and optionally the maximum size of a memory. 
+
+## Table Types:
+
+Table types classify tables over elements of reference types within a size range. 
+
+**tabletype**: **limits** **reftype**
+
+Like memories, tables are constrained by limits for their minimum and optionally maximum size.
+
 ## Global Types: 
+
+Global types classify global variables, which hold a value and can either be mutable or immutable.
 
 **globaltype**: **mut** **valtype**
 
-**mut**: const | var
+**mut**: **const** | **var**
 

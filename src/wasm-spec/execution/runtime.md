@@ -6,13 +6,13 @@ Values can be integers, floating-points data of 32 or 64 bit width each, vectors
 
 **value**:   **num** | **vec** | **ref**
 
-**num**:  **i32**.const i32 | **i64**.const i64 |
+**num**:  **i32**.**const** **i32** | **i64**.**const** **i64** |
 
-           **f32**.const f32 | **f64**.const f64
+           **f32**.**const** **f32** | **f64**.**const** **f64**
 
-**vec**:  **v128**.const i128
+**vec**:  **v128**.**const** **i128**
 
-**ref**:  **ref**.null t | **ref** funcaddr | **ref**.extern externaddr
+**ref**:  **ref**.**null** **t** | **ref** **funcaddr** | **ref**.**extern** **externaddr**
 
 ## Result
 
@@ -27,7 +27,9 @@ Function instances, table instances, memory instances, and global instances, ele
 
 ## Memories
 
-**memoryinst** { data **vec(byte)**}
+It record its type and holds a vector of bytes.
+
+**memoryinst** {**type** **memtype**, **data** **vec(byte)**}
 
 ## Globals
 

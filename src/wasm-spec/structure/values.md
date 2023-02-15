@@ -28,11 +28,11 @@ Floating-point represents 32 or 64 bit values that correspond to the respective 
 
 **fbmag**: \\((1+uM2^{-M}2^e)\\) if \\(-2^{E-1}+2 \leq e \leq 2^{E-1}-1\\)
 
-       \\((0+uM2^{-M}2^e)\\) if \\(e=-2^{E-1}+2\\)
+           \\((0+uM2^{-M}2^e)\\) if \\(e=-2^{E-1}+2\\)
 
-       \\(\inf \\)
+           \\(\inf \\)
 
-       \\(nan(n)\\) if \\(1\leq n \leq 2^M\\)
+           \\(nan(n)\\) if \\(1\leq n \leq 2^M\\)
 
 where \\(M=signif(N)\\) and \\(E=expon(N)\\) with
 
