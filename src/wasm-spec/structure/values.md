@@ -5,7 +5,6 @@ Bytes are represented as hexadecimal literals less than 256.
 
 **byte**: \\(0x00\\) | \\(0x01\\) | \\(0x02\\) |... | \\(0xff\\)
 
-**Questions**: Don't we have the **Bit** type?
 
 ## Integers
 Types of integers are demermined by their bit length \\(b\\) and whether they are signed or unsigned.
@@ -19,6 +18,8 @@ Types of integers are demermined by their bit length \\(b\\) and whether they ar
 The signedness of **ib** depends on context. They are automatically interpreted as unsigned integer. However, some operations convert them into signed integer.
 
 In Wasm, the main types of integers are: **u32**, **u64**, **s32**, **s64**, **i8**, **i16**, **i32**, **i64**. 
+
+**Note**: In Wasms spec, there is no specification for edianness. Need to specify the endianness.
 
 ## Floating-Points
 
@@ -40,13 +41,10 @@ where \\(M=signif(N)\\) and \\(E=expon(N)\\) with
 
 \\(signif(64)= 52\\)                       \\(expon(64)=11\\)
 
-**Questions**: What is n here? Does it has any relationship to N?
 
 ## Vectors
 
 Numeric vectors are 128-bit values that are processed by vector instructions. They are represented in the abstract syntax using i128.
-
-**Question**: The description of vectors are unclear. Does it means that a vector is simply i128, or an array with 128 elements, each elements are integer or float?
 
 ## Names
 

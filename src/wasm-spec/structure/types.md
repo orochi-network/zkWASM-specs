@@ -6,7 +6,6 @@ Number types are numeric values.
 
 **numtype**: **i32** | **i64** | **f32** | **f64**
 
-**Questions**: Wasm numeric values also consists of **i8**, **i16**. Why don't we have **i8** and **i16** in number types? 
 
 ## Vector types
 
@@ -16,17 +15,16 @@ Vector types are vector of numeric values processed by vector instructions.
 
 The type **v128** is a 128 bit vector of packed integer or floating-point data.
 
-**Questions**: What does bit means here? Is it the size of a vector or something?
 
 ## Reference types
 
-Reference types are first-class (**what does this mean?**) references to objects in the runtime store.
+Reference types are first-class references to objects in the runtime store.
 
 **reftype**: **funcref** | **externref**
 
 As in the wasm spec, **funref** is the union all references to functions, regardless of their function types.
 
-Similarly, **externref** is the infinite union of all references to objects owned by the embedder (**what does embedder mean?**) and that can be passed into WebAssembly under this type.
+Similarly, **externref** is the infinite union of all references to objects owned by the embedder  and that can be passed into WebAssembly under this type.
 
 ## Value types:
 
@@ -52,7 +50,7 @@ The value **max** is optional. If there is no **max**, the storage can grow to a
 
 **memtype**: **limits**
 
-The limits constrain the minimum and optionally the maximum size of a memory. 
+**Note**: The limits here is the optimal number of page size?. 
 
 ## Table Types:
 
@@ -62,6 +60,8 @@ Table types classify tables over elements of reference types within a size range
 
 Like memories, tables are constrained by limits for their minimum and optionally maximum size.
 
+**Note**: It means that the table contains the reference types.
+
 ## Global Types: 
 
 Global types classify global variables, which hold a value and can either be mutable or immutable.
@@ -70,3 +70,8 @@ Global types classify global variables, which hold a value and can either be mut
 
 **mut**: **const** | **var**
 
+## Extrenal Types:
+
+External types classify external or imported values (from libraries of other files). They can be function types, table types, memory types and global types.
+
+**extrentype**: **functype** | **tabletype** | **memtype** | **globaltype**

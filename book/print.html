@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>zkWASM Specifications</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="webassembly/draft.html"><strong aria-hidden="true">1.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/knew.html"><strong aria-hidden="true">1.1.</strong> What we knew</a></li><li class="chapter-item "><a href="webassembly/dont-know.html"><strong aria-hidden="true">1.2.</strong> What we don't know</a></li><li class="chapter-item "><a href="webassembly/study.html"><strong aria-hidden="true">1.3.</strong> Study from manuscript</a></li></ol></li><li class="chapter-item "><a href="wasm-spec/introduction/introduction.html"><strong aria-hidden="true">2.</strong> WasmSpec</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="wasm-spec/structure/value.html"><strong aria-hidden="true">2.1.</strong> Structure</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="wasm-spec/structure/values.html"><strong aria-hidden="true">2.1.1.</strong> Value</a></li><li class="chapter-item "><a href="wasm-spec/structure/types.html"><strong aria-hidden="true">2.1.2.</strong> Type</a></li><li class="chapter-item "><a href="wasm-spec/structure/module.html"><strong aria-hidden="true">2.1.3.</strong> Module</a></li></ol></li><li class="chapter-item "><a href="wasm-spec/validation/types.html"><strong aria-hidden="true">2.2.</strong> Validation</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="wasm-spec/validation/types.html"><strong aria-hidden="true">2.2.1.</strong> Type</a></li><li class="chapter-item "><a href="wasm-spec/validation/module.html"><strong aria-hidden="true">2.2.2.</strong> Module</a></li></ol></li><li class="chapter-item "><a href="wasm-spec/execution/runtime.html"><strong aria-hidden="true">2.3.</strong> Execution</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="wasm-spec/execution/runtime.html"><strong aria-hidden="true">2.3.1.</strong> Runtime</a></li></ol></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zkWASM Specifications</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><img src="webassembly/../images/meme/zkwasm.png" alt="zkWASM" /></p>
+<h1 id="abstract"><a class="header" href="#abstract">Abstract</a></h1>
+<p>You can simplify zkWASM = ZK + Wasm, we build zk-SNARK circuit to prove the state transitions of WebAssembly run-time.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="thing-that-we-knew-so-far"><a class="header" href="#thing-that-we-knew-so-far">Thing that we knew so far</a></h1>
+<h2 id="webassembly"><a class="header" href="#webassembly">WebAssembly</a></h2>
+<ul>
+<li><a href="http://troubles.md/wasm-is-not-a-stack-machine/">WebAssembly Troubles part 1: WebAssembly Is Not a Stack Machine</a></li>
+<li>WebAssembly <a href="https://webassembly.github.io/spec/core/">specification core</a></li>
+<li>Current WebAssembly is <code>wasm32</code> (32 bits of address space) there is a proposal to extends Wasm's address space, <a href="https://github.com/WebAssembly/memory64">memory64</a></li>
+<li>Wasm support multiple type of data</li>
+<li>List of <a href="https://webassembly.github.io/spec/core/appendix/index-instructions.html">instruction set</a></li>
+<li>If we find a way to deal with character device like <code>stdin</code>, <code>stdout</code>, <code>stderr</code>. We're probably able to solve the issue with network device with the same approach.</li>
+</ul>
+<h2 id="zkwasm"><a class="header" href="#zkwasm">zkWASM</a></h2>
+<ul>
+<li>WebAssembly emulator isn't a ZK-friendly VM</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="question-section"><a class="header" href="#question-section">Question section</a></h2>
+<p>Anything that's in doubt or uncertain</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="study-from-manuscript"><a class="header" href="#study-from-manuscript">Study from manuscript</a></h2>
+<p>Reading this <a href="https://jhc.sjtu.edu.cn/~hongfeifu/manuscriptb.pdf">manuscript</a> give us a starting point to design our own zkWASM.</p>
+<p>We consider Wasm run-time as a state machine:</p>
+<h3 id="input-data-of-wasm-run-time"><a class="header" href="#input-data-of-wasm-run-time">Input data of Wasm run-time</a></h3>
+<ul>
+<li>Wasm run-time will be init with a input tuple: \((I(C, H), E, IO)\)
+<ul>
+<li>\(I\): Wasm executable image
+<ul>
+<li>\(C\): Code image (code image is a read only memory section)</li>
+<li>\(H\): Initial memory (what's kind of the initial memory? is it a stack and can be popped by <code>local.get</code>?)</li>
+</ul>
+</li>
+<li>\(E\): Entrypoint of the program (the initial state will has <code>iaddr = E</code>)</li>
+<li>\(IO\): Represent as <code>stdin</code> and <code>stdout</code></li>
+</ul>
+</li>
+</ul>
+<p>In the manuscript they supposed that, zk-SNARK circuit will take the whole input tuple and prove the result of <code>stdout</code>.</p>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>In the manuscript they don't mention about block devices</li>
+<li>Do we need data encoding for <code>stdin</code>?</li>
+<li><code>stdout</code> can be simulate as a write only memory, where the <code>data_ptr</code> increase 1 for every byte of data</li>
+<li>Could we use <a href="https://wasi.dev/">WASI</a> to replace <code>stdin</code> and <code>stdout</code>?</li>
+<li>Wasm spec still updating we should aware of version diff</li>
+</ul>
+<h3 id="internal-state-of-wasm-run-time"><a class="header" href="#internal-state-of-wasm-run-time">Internal state of Wasm run-time</a></h3>
+<p>Denote \(S\) is state of Wasm run-time, it's a tuple: \((𝑖𝑎𝑑𝑑𝑟, F,M, G, SP, I, IO)\)</p>
+<ul>
+<li>\(𝑖𝑎𝑑𝑑𝑟\): current address of instruction in memory (\(𝑖𝑎𝑑𝑑𝑟 = E\) at the beginning, 𝑖𝑎𝑑𝑑𝑟 is not program count <code>PC</code>)</li>
+<li>\(F\): Calling frame with a <code>depth</code> field (is it a stack?)</li>
+<li>\(M\): Memory state</li>
+<li>\(G\): Global variables</li>
+<li>\(SP\): Stack</li>
+<li>\(I\): Wasm executable image
+<ul>
+<li>\(C\): Code image (𝑖𝑎𝑑𝑑𝑟 can't point to a address outside the code image)</li>
+<li>\(H\): Initial memory</li>
+</ul>
+</li>
+<li>\(IO\): Represent as <code>stdin</code> and <code>stdout</code></li>
+</ul>
+<p>Here are steps of the execution:</p>
+<ul>
+<li><strong>Step 1</strong>: Take the internal state \(S_i\) as the input (At the initial state, \(S_i.\text{𝑖𝑎𝑑𝑑𝑟} = E\)).</li>
+<li><strong>Step 2</strong>: Execute the opcode at current 𝑖𝑎𝑑𝑑𝑟 over \(S_{i}\)
+to compute the next state \(S_{i+1}\).
+We called this is a execution trace \(t_i\)</li>
+<li><strong>Step 3</strong>: If calling frame's depth isn't zero then repeat <code>Step 1</code>, otherwise stop.</li>
+</ul>
+<p>After we complete the computation, we have:</p>
+<ul>
+<li>\([t_0, t_1,..t_n]\): Execution trace of the program</li>
+<li>\(O\): The result of program in <code>stdout</code></li>
+</ul>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>We need to implement execution trace computation for every WebAssembly opcode</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>WebAssembly, or Wasm for short, is a safe, portable, low level code format designed for efficient execution and compact representation.</p>
+<p>The current Wasm is wasm32. There is a proposal, named memory64, to add support for 64-bit memory indexes to Wasm.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="structure"><a class="header" href="#structure">Structure</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="values"><a class="header" href="#values">Values</a></h1>
+<h2 id="bytes"><a class="header" href="#bytes">Bytes</a></h2>
+<p>Bytes are represented as hexadecimal literals less than 256.</p>
+<p><strong>byte</strong>: \(0x00\) | \(0x01\) | \(0x02\) |... | \(0xff\)</p>
+<h2 id="integers"><a class="header" href="#integers">Integers</a></h2>
+<p>Types of integers are demermined by their bit length \(b\) and whether they are signed or unsigned.</p>
+<p><strong>ub</strong>: \(0\) | \(1\) |...| \(2^b-1\)</p>
+<p><strong>sb</strong>: \(-2^{b-1}\) |...| \(-1\) | \(0\) | \(1\) |...| \(2^{b-1}-1\) </p>
+<p><strong>ib</strong>: <strong>ub</strong></p>
+<p>The signedness of <strong>ib</strong> depends on context. They are automatically interpreted as unsigned integer. However, some operations convert them into signed integer.</p>
+<p>In Wasm, the main types of integers are: <strong>u32</strong>, <strong>u64</strong>, <strong>s32</strong>, <strong>s64</strong>, <strong>i8</strong>, <strong>i16</strong>, <strong>i32</strong>, <strong>i64</strong>. </p>
+<p><strong>Note</strong>: Need to specify the endianness.</p>
+<h2 id="floating-points"><a class="header" href="#floating-points">Floating-Points</a></h2>
+<p>Floating-point represents 32 or 64 bit values that correspond to the respective binary formats of the IEEE 754-2019 standard.</p>
+<p><strong>fb</strong>: +<strong>fbmag</strong> | -<strong>fbmag</strong></p>
+<p><strong>fbmag</strong>: \((1+uM2^{-M}2^e)\) if \(-2^{E-1}+2 \leq e \leq 2^{E-1}-1\)</p>
+<pre><code>       \\((0+uM2^{-M}2^e)\\) if \\(e=-2^{E-1}+2\\)
+
+       \\(\inf \\)
+
+       \\(nan(n)\\) if \\(1\leq n \leq 2^M\\)
+</code></pre>
+<p>where \(M=signif(N)\) and \(E=expon(N)\) with</p>
+<p>\(signif(32)= 23\)                        \(expon(32)=8\)</p>
+<p>\(signif(64)= 52\)                       \(expon(64)=11\)</p>
+<h2 id="vectors"><a class="header" href="#vectors">Vectors</a></h2>
+<p>Numeric vectors are 128-bit values that are processed by vector instructions. They are represented in the abstract syntax using i128.</p>
+<h2 id="names"><a class="header" href="#names">Names</a></h2>
+<p>Names are sequences of characters.</p>
+<p><strong>name</strong>: <em><em>(char</em>)</em>* if |utf8(char*)| \(&lt;2^32\)</p>
+<p><strong>char</strong>: \(U+00 |...| U+D7FF | U+E00 |...| U+10FFF\)</p>
+<p>The length of the name is bounded by the length of utf8 encoding.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="types"><a class="header" href="#types">Types</a></h1>
+<h2 id="number-types"><a class="header" href="#number-types">Number types</a></h2>
+<p>Number types are numeric values.</p>
+<p><strong>numtype</strong>: <strong>i32</strong> | <strong>i64</strong> | <strong>f32</strong> | <strong>f64</strong></p>
+<p><strong>Questions</strong>: Wasm numeric values also consists of <strong>i8</strong>, <strong>i16</strong>. Why don't we have <strong>i8</strong> and <strong>i16</strong> in number types? </p>
+<h2 id="vector-types"><a class="header" href="#vector-types">Vector types</a></h2>
+<p>Vector types are vector of numeric values processed by vector instructions.</p>
+<p><strong>vectype</strong>: <strong>v128</strong></p>
+<p>The type <strong>v128</strong> is a 128 bit vector of packed integer or floating-point data.</p>
+<p><strong>Questions</strong>: What does bit means here? Is it the size of a vector or something?</p>
+<h2 id="reference-types"><a class="header" href="#reference-types">Reference types</a></h2>
+<p>Reference types are first-class (<strong>what does this mean?</strong>) references to objects in the runtime store.</p>
+<p><strong>reftype</strong>: <strong>funcref</strong> | <strong>externref</strong></p>
+<p>As in the wasm spec, <strong>funref</strong> is the union all references to functions, regardless of their function types.</p>
+<p>Similarly, <strong>externref</strong> is the infinite union of all references to objects owned by the embedder (<strong>what does embedder mean?</strong>) and that can be passed into WebAssembly under this type.</p>
+<h2 id="value-types"><a class="header" href="#value-types">Value types:</a></h2>
+<p>Value types are  that Wasm code can with and the values that a variable accepts. </p>
+<p><strong>valtype</strong>: <strong>numtype</strong> | <strong>vectype</strong> | <strong>reftype</strong></p>
+<h2 id="result-types"><a class="header" href="#result-types">Result types:</a></h2>
+<p>Result types is the result of executing instructions or functions which is a sequence of values, written with brackets.</p>
+<p><strong>resulttype</strong> : <strong>[vec(valtype)]</strong></p>
+<h2 id="limit-types"><a class="header" href="#limit-types">Limit Types:</a></h2>
+<p>Limit types are the range of storage of memory types and table types</p>
+<p><strong>limit</strong>: \({\)<strong>min</strong> <strong>u32</strong>, <strong>max</strong> <strong>u32</strong> \(}\)</p>
+<p>The value <strong>max</strong> is optional. If there is no <strong>max</strong>, the storage can grow to any size.</p>
+<h2 id="memory-types"><a class="header" href="#memory-types">Memory Types:</a></h2>
+<p><strong>memtype</strong>: <strong>limits</strong></p>
+<p>The limits here is the total number of page size?. </p>
+<h2 id="table-types"><a class="header" href="#table-types">Table Types:</a></h2>
+<p>Table types classify tables over elements of reference types within a size range. </p>
+<p><strong>tabletype</strong>: <strong>limits</strong> <strong>reftype</strong></p>
+<p>Like memories, tables are constrained by limits for their minimum and optionally maximum size.</p>
+<h2 id="global-types"><a class="header" href="#global-types">Global Types:</a></h2>
+<p>Global types classify global variables, which hold a value and can either be mutable or immutable.</p>
+<p><strong>globaltype</strong>: <strong>mut</strong> <strong>valtype</strong></p>
+<p><strong>mut</strong>: <strong>const</strong> | <strong>var</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="modules"><a class="header" href="#modules">Modules</a></h1>
+<h2 id="indices"><a class="header" href="#indices">Indices</a></h2>
+<p>All types of indices start with zero. Each class of definition has its own index space</p>
+<h2 id="types-1"><a class="header" href="#types-1">Types</a></h2>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p><strong>func</strong>: {<strong>type</strong> <strong>typeidx</strong>, <strong>locals</strong> <strong>vec(valtype)</strong>, <strong>body</strong> <strong>expr</strong>}</p>
+<p>The <strong>type</strong> of the function </p>
+<p>The <strong>locals</strong> of the function is a vector of mutable local variables and their types.</p>
+<p>The <strong>body</strong> of the function declares a sequence of instructions. Upon termination, it must
+produce stack matching the function <strong>type</strong>’s result type.</p>
+<p><strong>Question</strong>: What does the stack contain? The value of the function's
+result or the type of the function's result?</p>
+<h2 id="tables"><a class="header" href="#tables">Tables</a></h2>
+<p>The table component of a module defines a vector of tables described by their table type:</p>
+<p><strong>table</strong>: {<strong>type</strong> <strong>tabletype</strong>}</p>
+<h2 id="memory"><a class="header" href="#memory">Memory</a></h2>
+<p>A memory is a vector of raw uninterpreted bytes.</p>
+<p>Memories can be initialized through data segments.</p>
+<p>Memories can be managed through paging.</p>
+<p><strong>mem</strong>: {<strong>type</strong> <strong>memtype</strong>}</p>
+<p>Memories are referenced through memory indices, starting with the smallest index not referencing a memory import.</p>
+<h2 id="globals"><a class="header" href="#globals">Globals</a></h2>
+<p>The global component is a vector of global variables.</p>
+<p><strong>global</strong>: {<strong>type</strong> <strong>globaltype</strong>, <strong>init</strong> <strong>expr</strong>}</p>
+<p>A global variable has a type. It also has an init value which is given by an expression.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="types-2"><a class="header" href="#types-2">Types</a></h1>
+<p>Most types are automatically valid. However, there are several restrictions to Limits, Block Type, Table Types, Memory Types.</p>
+<h2 id="limits"><a class="header" href="#limits">Limits</a></h2>
+<p>Trivially we must have \(<strong>limits</strong>.<strong>min</strong> \leq <strong>limits</strong>.<strong>max</strong>\). In addition, depend on different types (table, memory,...), we have a \(k\) such that:</p>
+<ol>
+<li>
+<p>\(<strong>limits</strong>.<strong>min</strong> \leq k\).</p>
+</li>
+<li>
+<p>If \(<strong>limits</strong>.<strong>max</strong>\) is not empty, then \(<strong>limits</strong>.<strong>max</strong> \leq k\).</p>
+</li>
+</ol>
+<p>We say that the limit is valid within range \(k\). As in, the limit condition is formally expressed as follow:</p>
+<p>\(<strong>limits</strong>.<strong>min</strong> \leq k\).   \((<strong>limits</strong>.<strong>max</strong> \leq k)^{?}\).    \((<strong>limits</strong>.<strong>min</strong> \leq <strong>limits</strong>.<strong>max</strong>)^{?}\). </p>
+<p><strong>limits</strong>:k</p>
+<h2 id="block-types"><a class="header" href="#block-types">Block Types</a></h2>
+<h2 id="function-types"><a class="header" href="#function-types">Function Types</a></h2>
+<p>The function types are always valid.</p>
+<h2 id="table-types-1"><a class="header" href="#table-types-1">Table Types</a></h2>
+<p>The limit of table type must be valid within range \(2^{32}-1\).</p>
+<p><strong>tabletype</strong>.<strong>limits</strong>:2^{32}</p>
+<h2 id="memory-types-1"><a class="header" href="#memory-types-1">Memory Types</a></h2>
+<p>The limit of memory type must be valid within range \(2^{16}\).</p>
+<p><strong>memtype</strong>.<strong>limits</strong>:2^{16}</p>
+<h2 id="global-types-1"><a class="header" href="#global-types-1">Global Types</a></h2>
+<p>The global type is always valid.</p>
+<h2 id="external-types"><a class="header" href="#external-types">External Types</a></h2>
+<p><strong>table</strong> <strong>tabletype</strong>: The table type <strong>tabletype</strong> must be valid.</p>
+<p><strong>mem</strong>  <strong>memtype</strong>: The memory type <strong>memtype</strong> must be valid.</p>
+<p><strong>func</strong> <strong>functype</strong>: The function type <strong>functype</strong> must be valid.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="types-3"><a class="header" href="#types-3">Types</a></h1>
+<p>Most types are automatically valid. However, there are several restrictions to Limits, Block Type, Table Types, Memory Types.</p>
+<h2 id="limits-1"><a class="header" href="#limits-1">Limits</a></h2>
+<p>Trivially we must have \(<strong>limits</strong>.<strong>min</strong> \leq <strong>limits</strong>.<strong>max</strong>\). In addition, depend on different types (table, memory,...), we have a \(k\) such that:</p>
+<ol>
+<li>
+<p>\(<strong>limits</strong>.<strong>min</strong> \leq k\).</p>
+</li>
+<li>
+<p>If \(<strong>limits</strong>.<strong>max</strong>\) is not empty, then \(<strong>limits</strong>.<strong>max</strong> \leq k\).</p>
+</li>
+</ol>
+<p>We say that the limit is valid within range \(k\). As in, the limit condition is formally expressed as follow:</p>
+<p>\(<strong>limits</strong>.<strong>min</strong> \leq k\).   \((<strong>limits</strong>.<strong>max</strong> \leq k)^{?}\).    \((<strong>limits</strong>.<strong>min</strong> \leq <strong>limits</strong>.<strong>max</strong>)^{?}\). </p>
+<p><strong>limits</strong>:k</p>
+<h2 id="block-types-1"><a class="header" href="#block-types-1">Block Types</a></h2>
+<h2 id="function-types-1"><a class="header" href="#function-types-1">Function Types</a></h2>
+<p>The function types are always valid.</p>
+<h2 id="table-types-2"><a class="header" href="#table-types-2">Table Types</a></h2>
+<p>The limit of table type must be valid within range \(2^{32}-1\).</p>
+<p><strong>tabletype</strong>.<strong>limits</strong>:2^{32}</p>
+<h2 id="memory-types-2"><a class="header" href="#memory-types-2">Memory Types</a></h2>
+<p>The limit of memory type must be valid within range \(2^{16}\).</p>
+<p><strong>memtype</strong>.<strong>limits</strong>:2^{16}</p>
+<h2 id="global-types-2"><a class="header" href="#global-types-2">Global Types</a></h2>
+<p>The global type is always valid.</p>
+<h2 id="external-types-1"><a class="header" href="#external-types-1">External Types</a></h2>
+<p><strong>table</strong> <strong>tabletype</strong>: The table type <strong>tabletype</strong> must be valid.</p>
+<p><strong>mem</strong>  <strong>memtype</strong>: The memory type <strong>memtype</strong> must be valid.</p>
+<p><strong>func</strong> <strong>functype</strong>: The function type <strong>functype</strong> must be valid.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="module"><a class="header" href="#module">Module</a></h1>
+<h2 id="tables-1"><a class="header" href="#tables-1">Tables</a></h2>
+<p>The table type <strong>tabletype</strong> must be valid.</p>
+<h2 id="memories"><a class="header" href="#memories">Memories</a></h2>
+<p>The memory type <strong>memtype</strong> must be valid.</p>
+<h2 id="global"><a class="header" href="#global">Global</a></h2>
+<p>The blobal type <strong>mut</strong> \(t\) must be valid.</p>
+<p>The expression <strong>expr</strong> must be valid with the result type \(t\).</p>
+<p>The expression <strong>expr</strong> must be constant.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="runtime"><a class="header" href="#runtime">Runtime</a></h1>
+<h2 id="values-1"><a class="header" href="#values-1">Values</a></h2>
+<p>Values can be integers, floating-points data of 32 or 64 bit width each, vectors of 128 bit width or reference types</p>
+<p><strong>value</strong>:   <strong>num</strong> | <strong>vec</strong> | <strong>ref</strong></p>
+<p><strong>num</strong>:  <strong>i32</strong>.<strong>const</strong> <strong>i32</strong> | <strong>i64</strong>.<strong>const</strong> <strong>i64</strong> |</p>
+<pre><code>       **f32**.**const** **f32** | **f64**.**const** **f64**
+</code></pre>
+<p><strong>vec</strong>:  <strong>v128</strong>.<strong>const</strong> <strong>i128</strong></p>
+<p><strong>ref</strong>:  <strong>ref</strong>.<strong>null</strong> <strong>t</strong> | <strong>ref</strong> <strong>funcaddr</strong> | <strong>ref</strong>.<strong>extern</strong> <strong>externaddr</strong></p>
+<h2 id="result"><a class="header" href="#result">Result</a></h2>
+<p>A result is the outcome of a computation. It can be a sequence of values or a trap.</p>
+<p><strong>result</strong>: <strong>val</strong>* | <strong>trap</strong></p>
+<h2 id="address"><a class="header" href="#address">Address</a></h2>
+<p>Function instances, table instances, memory instances, and global instances, element instances, and data instances in the store are referenced with abstract addresses. </p>
+<p><strong>addr</strong>: 0 | 1 | | 2 | ...</p>
+<h2 id="memories-1"><a class="header" href="#memories-1">Memories</a></h2>
+<p>It record its type and holds a vector of bytes.</p>
+<p><strong>memoryinst</strong> {<strong>type</strong> <strong>memtype</strong>, <strong>data</strong> <strong>vec(byte)</strong>}</p>
+<h2 id="globals-1"><a class="header" href="#globals-1">Globals</a></h2>
+<p>A global instance  represents a global variable. It has a type and value of the variable.</p>
+<p><strong>globalinst</strong>: {type <strong>globaltype</strong>, value <strong>val</strong>}</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="runtime-1"><a class="header" href="#runtime-1">Runtime</a></h1>
+<h2 id="values-2"><a class="header" href="#values-2">Values</a></h2>
+<p>Values can be integers, floating-points data of 32 or 64 bit width each, vectors of 128 bit width or reference types</p>
+<p><strong>value</strong>:   <strong>num</strong> | <strong>vec</strong> | <strong>ref</strong></p>
+<p><strong>num</strong>:  <strong>i32</strong>.<strong>const</strong> <strong>i32</strong> | <strong>i64</strong>.<strong>const</strong> <strong>i64</strong> |</p>
+<pre><code>       **f32**.**const** **f32** | **f64**.**const** **f64**
+</code></pre>
+<p><strong>vec</strong>:  <strong>v128</strong>.<strong>const</strong> <strong>i128</strong></p>
+<p><strong>ref</strong>:  <strong>ref</strong>.<strong>null</strong> <strong>t</strong> | <strong>ref</strong> <strong>funcaddr</strong> | <strong>ref</strong>.<strong>extern</strong> <strong>externaddr</strong></p>
+<h2 id="result-1"><a class="header" href="#result-1">Result</a></h2>
+<p>A result is the outcome of a computation. It can be a sequence of values or a trap.</p>
+<p><strong>result</strong>: <strong>val</strong>* | <strong>trap</strong></p>
+<h2 id="address-1"><a class="header" href="#address-1">Address</a></h2>
+<p>Function instances, table instances, memory instances, and global instances, element instances, and data instances in the store are referenced with abstract addresses. </p>
+<p><strong>addr</strong>: 0 | 1 | | 2 | ...</p>
+<h2 id="memories-2"><a class="header" href="#memories-2">Memories</a></h2>
+<p>It record its type and holds a vector of bytes.</p>
+<p><strong>memoryinst</strong> {<strong>type</strong> <strong>memtype</strong>, <strong>data</strong> <strong>vec(byte)</strong>}</p>
+<h2 id="globals-2"><a class="header" href="#globals-2">Globals</a></h2>
+<p>A global instance  represents a global variable. It has a type and value of the variable.</p>
+<p><strong>globalinst</strong>: {type <strong>globaltype</strong>, value <strong>val</strong>}</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </body>
+</html>
