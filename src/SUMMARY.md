@@ -14,3 +14,5 @@
     - [Module](./wasm-spec/validation/module.md)
   - [Execution](./wasm-spec/execution/convention.md)
     - [Runtime](./wasm-spec/execution/runtime.md)
+- [Technical Overview](./technical_overview/draft.md)
+  - [Handling Memory Accesses](./technical_overview/handling_memory_access/draft.md)
