@@ -44,6 +44,19 @@ A global instance  represents a global variable. It has a type and value of the 
 
 **globalinst**: {type **globaltype**, value **val**}
 
+## Module Intances
+
+A module instance is the runtime representation of a module. It holds all the  runtime representations of all entities that are imported, defined, or exported by the module.
+
+ **moduleinst** {**type** **(functype*)**,
+                **funcadrr** **(funcadrr*)**,
+                **tableadrr** **(tableadrr*)**,
+                **globaladrr** **(dlobaladrr*)**,
+                **elemadrr** **(elemadrr*)**,
+                **dataadrr** **(dataadrr*)**,
+                **exports** **(exportinst*)**}
+ 
+
 ## Data Instances
 
 Data instance represents a data segment. It has a vector of bytes.

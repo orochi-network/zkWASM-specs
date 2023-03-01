@@ -36,6 +36,7 @@ The limit of memory type must be valid within range \\(2^{16}\\).
 
 **memtype**.**limits**:2^{16}
 
+**Note**: It means that the number of page size should be within \\(2^{16}\\), right?
 
 ## Global Types
 

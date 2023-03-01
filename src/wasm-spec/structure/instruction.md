@@ -24,6 +24,8 @@ Variable instructions are used to access variables
 
 **Note**: **local**.**tee** is similar to **local**.**set** but it also returns the argument.
 
+## Parametric Instructuion
+
 ## Expression
 
 Expressions are sequences or instructions, then terminated be an **end** marker.
